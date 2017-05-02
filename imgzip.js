@@ -40,13 +40,17 @@
 
 	}
 	function drowImg(files,fn){
+
 		var read = new FileReader();
 		read.readAsDataURL(files[index]);
 		read.onload=function(){
 			zip(this.result,defineConfig,function(data){
 				index++;
+
 				if(index<files.length){
 					drowImg(files,fn);
+				}else{
+					index = 0;
 				}
 				fn(data);
 			})
