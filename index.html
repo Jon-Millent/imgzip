@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="file" id="test">
+	<img src="" alt="" id="gg">
+</body>
+<script type="text/javascript" src="imgzip.js"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		var img = new ImgZip();
+
+		var imgs = document.getElementById('test');
+		var imger = document.getElementById('gg');
+
+		imgs.onchange = function(){
+
+			var read = new FileReader();
+			read.readAsDataURL(this.files[0]);
+			var root = this;
+			read.onload=function(){
+				
+				var imger = new Image();
+				imger.onload= function(){
+					document.body.appendChild(this)
+					console.log(this.offsetWidth,'<---------')
+
+					var w = this.offsetWidth;
+					var h = this.offsetHeight;
+
+					img.zipImages(root.files,{
+						width : w, //宽度
+						height : h, //高度
+			      		quality : 0.2 //质量
+					},function(data){
+						var bb = document.createElement('img');
+						bb.setAttribute('src',data);
+						document.body.appendChild(bb)
+					})
+				}
+				imger.src = this.result;
+
+			}
+			console.log(this.files)
+			
+		}
+		
+	}
+</script>
+</html>
